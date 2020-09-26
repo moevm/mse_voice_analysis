@@ -1,6 +1,6 @@
 import argparse
 import re
-
+import os.path
 
 def oneDictorIdentification():
     print('-i --> Identify Dictor')
@@ -21,6 +21,9 @@ def speechRecognition():
 def fileProcessing(filename):
     if not (re.search(r'\S+.mp3', filename)):
         print("Only mp3 format supported")
+        exit(-1)
+    if not (os.path.exists(filename)):
+        print("No such file")
         exit(-1)
     print('Processing file')
     '''

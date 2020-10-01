@@ -14,3 +14,25 @@
 
 ### Ссылка на таск трекер
 https://github.com/moevm/mse_voice_analysis/projects/1
+
+
+### Инструкция
+Для корректной работы приложения необходимо его использовать на Ubuntu 18.04. Необходимо наличие установленного пакета python3 и make.
+1. Скачать репозиторий:
+```
+git clone https://github.com/moevm/mse_voice_analysis.git
+```
+2. Перейти в скачанную папку:
+```
+cd mse_voice_analysis
+```
+3. Произвести установку: 
+```
+make install
+```
+4. Запустить программу:
+```
+mse_voice_analysis --help
+```
+
+Для удаления из папки артефактов сборки можно использовать команду `make clearbuild`

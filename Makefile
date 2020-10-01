@@ -8,4 +8,4 @@ clearbuild:
 	rm -rf dist/ build/ main.spec MSE_VOICE_ANALYSIS/'Iteration 1'/__pycache__/ 
 	
 uninstall:
-	rm -f /usr/local/bin/mse_voice_analysis
+	sudo rm -f /usr/local/bin/mse_voice_analysis

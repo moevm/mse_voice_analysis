@@ -1,10 +1,12 @@
 import argparse
 import re
 import os.path
+
 import oneDictor as od
 import manyDictors as md
 import fileDistr as fd
 import speechRec as sr
+
 
 
 def fileProcessing(filename):
@@ -33,6 +35,7 @@ def keysProcessing(keys):
         fd.fileDistribution()
     if keys['speech']:
         sr.speechRecognition()
+
 
 
 parser = argparse.ArgumentParser()

@@ -2,20 +2,11 @@ import argparse
 import re
 import os.path
 
-def oneDictorIdentification():
-    print('-i --> Identify Dictor')
+import oneDictor as od
+import manyDictors as md
+import fileDistr as fd
+import speechRec as sr
 
-
-def manyDictorsIdentification():
-    print('-m --> Identify many Dictors')
-
-
-def fileDistribution():
-    print('-f --> Distribution all dictors into separate files')
-
-
-def speechRecognition():
-    print('-s --> Speech recognition for each dictor')
 
 
 def fileProcessing(filename):
@@ -37,13 +28,14 @@ def fileProcessing(filename):
 
 def keysProcessing(keys):
     if keys['identify']:
-        oneDictorIdentification()
+        od.oneDictorIdentification()
     if keys['many']:
-        manyDictorsIdentification()
+        md.manyDictorsIdentification()
     if keys['distribution']:
-        fileDistribution()
+        fd.fileDistribution()
     if keys['speech']:
-        speechRecognition()
+        sr.speechRecognition()
+
 
 
 parser = argparse.ArgumentParser()

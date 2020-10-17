@@ -17,13 +17,10 @@ def fileProcessing(filename):
         print("No such file")
         exit(-1)
     print('Processing file')
-    '''
-    #Play mp3 file
-        import pyglet
-        song = pyglet.media.load(filename)
-        song.play()
-        pyglet.app.run()
-    '''
+    # Play mp3 file
+    song = pyglet.media.load(filename)
+    song.play()
+    pyglet.app.run()
 
 
 def keysProcessing(keys):
@@ -39,7 +36,8 @@ def keysProcessing(keys):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('file', help='mp3 file')
+parser.add_argument('-p', '--path', default="res/", help="select folder with speakers")
+parser.add_argument('file', help='select speaker identifier')
 parser.add_argument('-i', '--identify', action='store_true', help='Function which can identify dictor')
 parser.add_argument('-m', '--many', action='store_true', help='Function which can identify many dictors')
 parser.add_argument('-d', '--distribution', action='store_true', help='Function which can distribute all dictors into '
@@ -50,7 +48,7 @@ args = parser.parse_args()
 print(args)
 
 varArgs = vars(args)
-file = varArgs['file']
+file = "../" + varArgs['path'] + '/' + varArgs['file']
 try:
     fileProcessing(file)
     keysProcessing(varArgs)

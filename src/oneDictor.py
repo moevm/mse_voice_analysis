@@ -16,8 +16,8 @@ def oneDictorIdentification(cSample, mainFile):
     encoder = VoiceEncoder()
     embed = encoder.embed_utterance(wav)
     np.set_printoptions(precision=3, suppress=True)
-
     embedNew = []
+
     for i in embed:
         if i != 0.0:
             embedNew.append(i)
@@ -31,7 +31,6 @@ def oneDictorIdentification(cSample, mainFile):
     encoder = VoiceEncoder()
     embed = encoder.embed_utterance(wav)
     np.set_printoptions(precision=3, suppress=True)
-
     embedNew2 = []
 
     for i in embed:
@@ -43,7 +42,10 @@ def oneDictorIdentification(cSample, mainFile):
 
     result = abs((avg2 / len(embedNew2)) - (avg1 / len(embedNew)))
     print(result)
-    if (result < 0.005):
+    if (result < 0.002):
         print("Match!")
+        return 1
     else:
         print("Its a different voices")
+        return 0
+

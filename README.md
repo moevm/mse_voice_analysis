@@ -45,5 +45,5 @@ mse_voice_analysis --help
 
 Для удаления приложения из терминала можно использовать команду `make uninstall`
 
-## Установка ffmeg для Windows
+#### Установка ffmpeg для Windows
 Скачать библиотеку по ссылке https://www.ffmpeg.org/download.html и добавить для нее зависимость в переменные среды.

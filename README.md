@@ -38,3 +38,13 @@ mse_voice_analysis --help
 Для удаления из папки артефактов сборки можно использовать команду `make clearbuild`
 
 Для удаления приложения из терминала можно использовать команду `make uninstall`
+
+Для работы с файлами формата mp3 будет необходимо скачать библиотеку ffmpeg.
+1. Для Linux команды.
+```
+sudo add-apt-repository universe
+sudo apt update
+sudo apt install ffmpeg
+```
+2. Для Windows
+Скачать биюлиотеку по ссылке https://www.ffmpeg.org/download.html и добавить для нее зависимость в переменные среды.

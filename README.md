@@ -47,4 +47,4 @@ sudo apt update
 sudo apt install ffmpeg
 ```
 2. Для Windows
-Скачать биюлиотеку по ссылке https://www.ffmpeg.org/download.html и добавить для нее зависимость в переменные среды.
+Скачать библиотеку по ссылке https://www.ffmpeg.org/download.html и добавить для нее зависимость в переменные среды.

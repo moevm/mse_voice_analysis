@@ -18,19 +18,25 @@ https://github.com/moevm/mse_voice_analysis/projects/1
 
 ### Инструкция
 Для корректной работы приложения необходимо его использовать на Ubuntu 18.04. Необходимо наличие установленного пакета python3 и make.
-1. Скачать репозиторий:
+1. Для работы с файлами формата mp3 будет необходимо скачать библиотеку ffmpeg.
+```
+sudo add-apt-repository universe
+sudo apt update
+sudo apt install ffmpeg
+```
+2. Скачать репозиторий:
 ```
 git clone https://github.com/moevm/mse_voice_analysis.git
 ```
-2. Перейти в скачанную папку:
+3. Перейти в скачанную папку:
 ```
 cd mse_voice_analysis
 ```
-3. Произвести установку: 
+4. Произвести установку: 
 ```
 make install
 ```
-4. Запустить программу:
+5. Запустить программу:
 ```
 mse_voice_analysis --help
 ```
@@ -38,3 +44,6 @@ mse_voice_analysis --help
 Для удаления из папки артефактов сборки можно использовать команду `make clearbuild`
 
 Для удаления приложения из терминала можно использовать команду `make uninstall`
+
+#### Установка ffmpeg для Windows
+Скачать библиотеку по ссылке https://www.ffmpeg.org/download.html и добавить для нее зависимость в переменные среды.

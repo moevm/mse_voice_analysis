@@ -23,6 +23,33 @@ class MyTestCase(unittest.TestCase):
         confident, possible = self.identification.manyDictorsIdentification(wav, True)
         self.assertTrue(confident <= 2 <= possible)
 
+    def test4(self):
+        wav = preprocess_wav(Path("../../res", "Belyaev2.mp3"))
+        confident, possible = self.identification.manyDictorsIdentification(wav, True)
+        self.assertTrue(confident <= 1 <= possible)
+
+    def test5(self):
+        wav = preprocess_wav(Path("../../res", "OblomovAndPuchkov1.mp3"))
+        confident, possible = self.identification.manyDictorsIdentification(wav, True)
+        self.assertTrue(confident <= 2 <= possible)
+
+    def test6(self):
+        wav = preprocess_wav(Path("../../res", "OblomovAndPuchkov2.mp3"))
+        confident, possible = self.identification.manyDictorsIdentification(wav, True)
+        self.assertTrue(confident <= 2 <= possible)
+
+    def test7(self):
+        wav = preprocess_wav(Path("../../res", "WylsaAndDroider1.mp3"))
+        confident, possible = self.identification.manyDictorsIdentification(wav, True)
+        self.assertTrue(confident <= 2 <= possible)
+
+    def test8(self):
+        wav = preprocess_wav(Path("../../res", "trump1.mp3"))
+        confident, possible = self.identification.manyDictorsIdentification(wav, True)
+        self.assertTrue(confident <= 1 <= possible)
+
+
+
 
 if __name__ == '__main__':
     unittest.main()

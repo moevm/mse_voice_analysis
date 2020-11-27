@@ -1,0 +1,9 @@
+argparse
+Path
+
+torch
+resemblyzer
+SpeechRecognition
+numpy
+pydub
+soundfile

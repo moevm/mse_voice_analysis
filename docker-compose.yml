@@ -1,0 +1,9 @@
+version: '3.3'
+services:
+  mse:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: "no"
+    image: mse
+    container_name: mse

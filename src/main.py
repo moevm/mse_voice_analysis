@@ -7,6 +7,8 @@ import manyDictors as md
 import exportAudio as fd
 import speechRecognition as sr
 
+onlyOneDictor = True;
+
 def fileProcessing(filename):
     # if not (re.search(r'\S+.mp3', filename)):
     #     print("Only mp3 format supported")
@@ -18,35 +20,45 @@ def fileProcessing(filename):
 
 
 def keysProcessing(keys):
-    if keys['many']:
+    mFirst = True
+
+    if keys['many']:        # -m
+        onlyOneDictor = True
+        mFirst = False
         identification = md.SeveralSpeakers()
-        path = Path("../" + varArgs['path'], varArgs['file'])
+        path = Path(varArgs['path'], varArgs['file'])
         identification.several_speakers_identification(path, recognition=True, export=True, min_duration=1)
         res_file = open(str(path) + str('.txt'))
+        if(identification.speakers_number != 1):
+            onlyOneDictor = False
 
+        if(varArgs['file2'] != ""):
+            identification2 = md.SeveralSpeakers()
+            path = Path(varArgs['path'], varArgs['file2'])
+            identification2.several_speakers_identification(path, recognition=True, export=True, min_duration=1)
+            res_file = open(str(path) + str('.txt'))
+            if (identification2.speakers_number != 1):
+                onlyOneDictor = False
 
-    if keys['identify']:
-        od.oneDictorIdentification(file, file2)  # контрольные образцы
-
-        # a = md.many_dictors()
-        # wav = preprocess_wav(Path("../" + varArgs['path'], varArgs['file']))
-        # c, d = a.manyDictorsIdentification(wav, True);  # Идентификация наличия нескольких дикторов на аудио
-        # print("\033[33m\033[1m {}".format("Count of dictors ="), c)
-        # if (c <= 2): ###
-        #     od.oneDictorIdentification(file, file2)  # контрольные образцы
-        # else:
-        #     print("Several dictors on audio, you should use [-m] to recognize multiple speakers ")
-
-
-    # if keys['speech']:
-    #     recognition = sr.SpeechRecognition()
-    #     path = Path("../" + varArgs['path'], varArgs['file'])
-    #     result = recognition.recognize_speech(str(path))
-    #     print(result)
-
-    # if keys['distribution']:
-    #     fd.ExportAudio()
-
+    if keys['identify']:    # -i
+        if(mFirst):
+            identification1 = md.SeveralSpeakers()
+            path = Path(varArgs['path'], varArgs['file'])
+            identification1.several_speakers_identification(path, recognition=True, export=True, min_duration=1)
+        
+            identification2 = md.SeveralSpeakers()
+            path = Path(varArgs['path'], varArgs['file2'])
+            identification2.several_speakers_identification(path, recognition=True, export=True, min_duration=1)
+            if(identification1.speakers_number == 1 and identification2.speakers_number == 1): #один диктор в файле
+                od.oneDictorIdentification(file, file2)  # контрольные образцы
+            else:
+                print("[-i error] Several dictors on audio, you should use [-m] to recognize multiple speakers")
+        
+        else: # -m работал уже
+            if(onlyOneDictor):
+                od.oneDictorIdentification(file, file2)
+            else:
+                print("[-i error] Several dictors on audio, [-i] can compare only 2 single speakers")
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-p', '--path', default="res/", help="select folder with speakers")
@@ -55,20 +67,14 @@ parser.add_argument('-f2', '--file2', default="", help='select second speaker id
 
 parser.add_argument('-i', '--identify', action='store_true', help='Function which can identify dictor')
 parser.add_argument('-m', '--many', action='store_true', help='Function can identify many dictors, distribute all dictors into separate and create text file')
-# parser.add_argument('-s', '--speech', action='store_true', help='Function which provide speech recognition for each '
-#                                                                 'dictor')
-
-# parser.add_argument('-d', '--distribution', action='store_true', help='Function which can distribute all dictors into '
-#                                                                       'separate files')
-
-
-
 args = parser.parse_args()
 print(args)
 
 varArgs = vars(args)
-file = "../" + varArgs['path'] + '/' + varArgs['file']
-file2 = "../" + varArgs['path'] + '/' + varArgs['file2']
+path = varArgs['path'] + '/'
+file = varArgs['path'] + '/' + varArgs['file']
+file2 = varArgs['path'] + '/' + varArgs['file2']
+
 try:
     fileProcessing(file)
     keysProcessing(varArgs)

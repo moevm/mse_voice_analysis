@@ -25,10 +25,11 @@ class SeveralSpeakers:
         print('Recognition started')
         for i in range(len(paths)):
             self.recognized_text += 'Speaker #' + str(self.timing[self.splits[i][0]])
-            if np.average(self.metric[i]) > 0.75:
-                self.recognized_text += ' (confident)'
-            else:
-                self.recognized_text += ' (non-confident)'
+            count = 0
+            for m in self.metric[i]:
+                if m < 0.75:
+                    count += 1
+            self.recognized_text += ' (confidence percentage - ' +  str((1 - float(count) / len(self.metric[i])) * 100) + "%)"
             self.recognized_text += ' %02d:%02d: ' % divmod(self.splits[i][0], 60)
             self.recognized_text += recognizer.recognize_speech(paths[i]) + '\n'
             print('Recognition status: ' + str(i + 1) + '/' + str(len(paths)) + '...')

@@ -10,4 +10,4 @@ RUN apt-get install libsndfile-dev -y
 RUN apt-get install ffmpeg -y
 COPY . .
 
-CMD ["python", "src/main.py", "-h"]
+#CMD ["python", "src/main.py", "-h"]

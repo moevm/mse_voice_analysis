@@ -3,7 +3,7 @@ from resemblyzer import VoiceEncoder, preprocess_wav
 from pathlib import Path
 
 def oneDictorIdentification(cSample, mainFile):
-    print('-i --> Identify Dictor')
+    print('[-i] --> Identify Dictor')
     avg1 = 0.0
     avg2 = 0.0
 
@@ -40,11 +40,11 @@ def oneDictorIdentification(cSample, mainFile):
     result = abs((avg2 / len(embedNew2)) - (avg1 / len(embedNew)))
     print(result)
     if (result < 0.002):
-        # print("Match!")
-        print("\033[33m\033[1m {}".format("Match!"))
+        print("Match!")
+        # print("\033[33m\033[1m {}".format("Match!"))
         return 1
     else:
-        # print("Its a different voices")
-        print("\033[33m\033[1m {}".format("These are different voices"))
+        print("These are different voices")
+        # print("\033[33m\033[1m {}".format("These are different voices"))
         return 0
 

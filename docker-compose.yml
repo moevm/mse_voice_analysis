@@ -7,3 +7,7 @@ services:
     restart: "no"
     image: mse
     container_name: mse
+#    command: "python src/main.py --path res -m  -f trump-b.mp3"
+    volumes:
+      - ./result:/app/result
+      - ./res:/app/res

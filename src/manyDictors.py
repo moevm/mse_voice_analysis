@@ -107,7 +107,6 @@ class SeveralSpeakers:
         except HeaderNotFoundError:
             f = sf.SoundFile(path)
             self.rate = (len(f) / f.samplerate) / len(embed)
-        print(self.rate)
         for i in range(len(embed)):
             self.add_speaker(embed[i])
         self.clear()

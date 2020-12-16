@@ -4,6 +4,7 @@ from exportAudio import ExportAudio
 import numpy as np
 import os
 import soundfile as sf
+from mutagen.mp3 import MP3, HeaderNotFoundError
 
 
 class SeveralSpeakers:
@@ -97,12 +98,16 @@ class SeveralSpeakers:
                                         recognition=False, language='en-En'):
         self.min_duration = min_duration
         self.path = path
-        f = sf.SoundFile(path)
         wav = preprocess_wav(path)
         encoder = VoiceEncoder()
         _, embed, slices = encoder.embed_utterance(wav, return_partials=True, rate=1)
         np.set_printoptions(suppress=True)
-        self.rate = (len(f) / f.samplerate) / len(embed)
+        try:
+            self.rate = MP3(path).info.length / len(embed)
+        except HeaderNotFoundError:
+            f = sf.SoundFile(path)
+            self.rate = (len(f) / f.samplerate) / len(embed)
+        print(self.rate)
         for i in range(len(embed)):
             self.add_speaker(embed[i])
         self.clear()

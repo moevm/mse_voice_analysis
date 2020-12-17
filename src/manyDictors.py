@@ -2,8 +2,9 @@ from resemblyzer import VoiceEncoder, preprocess_wav
 from speechRecognition import SpeechRecognition
 from exportAudio import ExportAudio
 import numpy as np
-
 import os
+import soundfile as sf
+from mutagen.mp3 import MP3, HeaderNotFoundError
 
 
 class SeveralSpeakers:
@@ -86,6 +87,11 @@ class SeveralSpeakers:
         encoder = VoiceEncoder()
         _, embed, slices = encoder.embed_utterance(wav, return_partials=True, rate=1.16)
         np.set_printoptions(suppress=True)
+        try:
+            self.rate = MP3(path).info.length / len(embed)
+        except HeaderNotFoundError:
+            f = sf.SoundFile(path)
+            self.rate = (len(f) / f.samplerate) / len(embed)
         for i in range(len(embed)):
             self.add_speaker(embed[i])
         self.clear()

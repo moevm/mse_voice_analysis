@@ -10,14 +10,19 @@ class SpeechRecognition:
         result = ''
         file = sr.AudioFile(path)
         with file as source:
-            for i in range(0, int(source.DURATION), 2):
-                audio = self.recognizer.record(source, offset=i, duration=2)
-                try:
-                    result += self.recognizer.recognize_google(audio, language=self.language) + ' '
-                except sr.UnknownValueError:
-                    result += ' *** '
-                except sr.RequestError:
-                    return 'Recognizer Api is unavailable'
+            audio = self.recognizer.record(source)
+            try:
+                result = self.recognizer.recognize_google(audio, language=self.language)
+                return result
+            except sr.UnknownValueError:
+                for i in range(0, int(source.DURATION), 2):
+                    audio = self.recognizer.record(source, offset=i, duration=2)
+                    try:
+                        result += self.recognizer.recognize_google(audio, language=self.language) + ' '
+                    except sr.UnknownValueError:
+                        result += ' *** '
+                    except sr.RequestError:
+                        return 'Recognizer Api is unavailable'
         return result
 
 

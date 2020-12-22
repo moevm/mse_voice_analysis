@@ -27,7 +27,7 @@ class SeveralSpeakers:
             self.recognized_text += 'Speaker #' + str(self.timing[int(self.splits[i][0])])
             count = 0
             for m in self.metric[i]:
-                if m < 0.75:
+                if m < 0.65:
                     count += 1
             self.recognized_text += ' (confidence percentage - ' + str(round((1 - float(count) / len(self.metric[i])) * 100)) + "%)"
             self.recognized_text += ' %02d:%02d: ' % divmod(self.splits[i][0], 60)

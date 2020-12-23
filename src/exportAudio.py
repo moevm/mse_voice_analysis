@@ -9,7 +9,7 @@ class ExportAudio:
         for start, end in splits:
             audio = AudioSegment.from_file(path)[start * 1000:end * 1000]
             new_file = '/cut' + str(start) + '-' + str(end) + '.wav'
-            new_path = '../res/' + str(path).replace('\\', '_')
+            new_path = './res/' + str(path).replace('\\', '_')
             try:
                 os.mkdir(new_path)
             except FileExistsError:

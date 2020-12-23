@@ -29,16 +29,16 @@ def keysProcessing(keys):
         mFirst = False
         identification = md.SeveralSpeakers()
         path = Path(varArgs['path'], varArgs['file'])
-        identification.several_speakers_identification(path, recognition=True, export=True, min_duration=1)
-        res_file = open(str(path) + str('.txt'))
+        print("language = ", lang)
+        identification.several_speakers_identification(path, recognition=True, export=True, min_duration=3, language=lang)
         if(identification.speakers_number != 1):
             onlyOneDictor = False
 
         if(varArgs['file2'] != ""):
             identification2 = md.SeveralSpeakers()
             path = Path(varArgs['path'], varArgs['file2'])
-            identification2.several_speakers_identification(path, recognition=True, export=True, min_duration=1)
-            res_file = open(str(path) + str('.txt'))
+            identification2.several_speakers_identification(path, recognition=True, export=True, min_duration=3, language=lang)
+
             if (identification2.speakers_number != 1):
                 onlyOneDictor = False
 
@@ -62,20 +62,22 @@ def keysProcessing(keys):
                 od.oneDictorIdentification(file, file2)
             else:
                 print("[-i error] Several dictors on audio, [-i] can compare only 2 single speakers")
-
     if keys['pathMany']:
         odf.oneDictorFolder(file, folderPath)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-p', '--path', default="res/", help="select folder with speakers")
-parser.add_argument('-f', '--file', help='select speaker identifier')
-
+parser.add_argument('-p', '--path', default="res/", help="Select folder with speakers")
+parser.add_argument('-f', '--file', help='Select speaker identifier')
+parser.add_argument('-f2', '--file2', default="", help='Select second speaker identifier')
 
 parser.add_argument('-i', '--identify', action='store_true', help='Function can identify and compare 2 dictors')
+
 parser.add_argument('-m', '--many', action='store_true', help='Function can identify many dictors, distribute all dictors into separate and create text file')
-parser.add_argument('-iSeveral', '--identifySeveral', action='store_true', help='Function can found the closest sounding speaker in folder')
-parser.add_argument('-pMany', '--pathMany', default="", help='select folder with speaker for [-iSeveral]')
-parser.add_argument('-f2', '--file2', default="", help='select second speaker identifier')
+parser.add_argument('-l', '--language', default="en-En", help='Select language for [-m] function (en-En, ru-Ru)')
+
+parser.add_argument('-iSeveral', '--identifySeveral', action='store_true', help='Function can found most similar speakerg folder')
+parser.add_argument('-pMany', '--pathMany', default="", help='Select folder with speaker for [-iSeveral]')
+
 args = parser.parse_args()
 print(args)
 
@@ -83,6 +85,7 @@ varArgs = vars(args)
 path = varArgs['path'] + '/'
 file = varArgs['path'] + '/' + varArgs['file']
 file2 = varArgs['path'] + '/' + varArgs['file2']
+lang = varArgs['language']
 folderPath = varArgs['pathMany'] + '/'
 
 try:

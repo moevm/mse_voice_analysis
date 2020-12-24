@@ -4,7 +4,7 @@ from exportAudio import ExportAudio
 import numpy as np
 import os
 import soundfile as sf
-
+import io
 
 class SeveralSpeakers:
     def __init__(self):
@@ -21,9 +21,11 @@ class SeveralSpeakers:
 
     def recognize_audio(self, language, paths, export):
         recognizer = SpeechRecognition(language)
-        res_file = open('../res/' + self.wav + '/recognized.txt', "w")
+        res_file = open('./res/' + self.wav + '/recognized.txt', "w", encoding='utf8')
         print('Recognition started')
+
         for i in range(len(paths)):
+
             self.recognized_text += 'Speaker #' + str(self.timing[int(self.splits[i][0])])
             count = 0
             for m in self.metric[i]:
@@ -35,7 +37,12 @@ class SeveralSpeakers:
             print('Recognition status: ' + str(i + 1) + '/' + str(len(paths)) + '...')
             if not export:
                 os.remove(paths[i])
-        res_file.write(self.recognized_text)
+
+
+        res_file.write(u'\ufeff' + self.recognized_text)
+
+
+
         res_file.close()
 
     def get_splits(self):
@@ -72,7 +79,7 @@ class SeveralSpeakers:
                 self.metric.pop(i)
                 i -= 1
 
-    def add_speaker(self, embedding, precision=0.55):
+    def add_speaker(self, embedding, precision=0.63):
         closest = 0
         closest_precision = 0
         for i in range(len(self.speakers)):
@@ -110,8 +117,8 @@ class SeveralSpeakers:
         np.set_printoptions(suppress=True)
         for i in range(len(embed)):
             self.add_speaker(embed[i])
-        for i in range(len(self.timing)):
-            print(i, self.timing[i])
+        # for i in range(len(self.timing)):
+        #     print(i, self.timing[i])
         self.clear()
         print('Found %d speakers' % self.speakers_number)
         for i in range(self.speakers_number):
@@ -123,4 +130,5 @@ class SeveralSpeakers:
                 self.recognize_audio(language, paths, export)
         if return_splits:
             return self.speakers_number, self.splits
+
         return self.speakers_number
